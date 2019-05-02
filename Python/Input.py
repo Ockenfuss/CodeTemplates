@@ -3,13 +3,27 @@ import sys
 import configparser
 import os
 import __main__
-VERSION="1.0.0"
+import datetime
+VERSION="1.0.1"
 
 
 
 class Input(object):
+    """Parser to read inputfiles and create logs."""
+    
     def __init__(self,filename, version, def_opts={}):
+        """Create Input parser.
+        
+        Arguments:
+            object {Input} -- the parser object
+            filename {str} -- the file with the input options
+            version {str} -- version of the program
+        
+        Keyword Arguments:
+            def_opts {dict} -- dictionary with default input options and values. (default: {{}})
+        """
         self.filename=filename
+        self.version=version
         self.options={}
         self.config = configparser.ConfigParser(def_opts)
         self.config._interpolation = configparser.ExtendedInterpolation()
@@ -107,8 +121,9 @@ class Input(object):
             array -- array with lines including linebreak. 
         """
         log=[]
+        log.append(str(datetime.datetime.now()))
         log.append("Program: "+__main__.__file__)
-        log.append("Version: "+str(VERSION))
+        log.append("Version: "+str(self.version))
         log.append("Input options: "+self.filename)
         for sec in self.options.keys():
             log.append("**************************")
@@ -129,7 +144,7 @@ class Input(object):
             # everything_oK=False
         return everything_ok
 
-    def write_log(self, old_logs, new_logs):
+    def write_log(self, old_logs, new_logs, file_ext=None):
         """Write log to files.
         
         Combine all old logfiles, append the log of the actual program and save them to all new locations given.
@@ -137,12 +152,25 @@ class Input(object):
         Arguments:
             old_logs {arr} -- array with old logfiles
             new_logs {arr} -- array with new logfiles to be created.
+
+        Keyword Arguments:
+            file_ext {str} -- if set, the file extension in the given logfile locations are replaced before the function is executed. (default: {None})
         """
+        old_logs=np.atleast_1d(old_logs)
+        new_logs=np.atleast_1d(new_logs)
+        if file_ext!=None:
+            file_ext=file_ext.strip(".")
+            old_logs=[os.path.splitext(logfile)[0]+"."+file_ext for logfile in old_logs]
+            new_logs=[os.path.splitext(logfile)[0]+"."+file_ext for logfile in new_logs]
+        print(old_logs)
+        print(new_logs)
+
         old_lines=[]
         log=self.create_log()
         for old in old_logs:
             oldfile=open(old)
             old_lines.extend(oldfile.readlines())
+            old_lines.append("##############################################################")
             oldfile.close()
         old_lines.append("##############################################################")
         old_lines=[l+"\n" for l in old_lines]
@@ -151,3 +179,5 @@ class Input(object):
             newfile.writelines(old_lines)
             newfile.writelines(log)
             newfile.close()
+
+
