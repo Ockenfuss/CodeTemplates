@@ -4,7 +4,7 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.0.1"
+VERSION="1.0.3"
 
 
 
@@ -145,7 +145,7 @@ class Input(object):
             # everything_oK=False
         return everything_ok
 
-    def write_log(self, old_logs, new_logs, file_ext=None):
+    def write_log(self, new_logs, old_logs=[], file_ext=None):
         """Write log to files.
         
         Combine all old logfiles, append the log of the actual program and save them to all new locations given.
@@ -163,8 +163,6 @@ class Input(object):
             file_ext=file_ext.strip(".")
             old_logs=[os.path.splitext(logfile)[0]+"."+file_ext for logfile in old_logs]
             new_logs=[os.path.splitext(logfile)[0]+"."+file_ext for logfile in new_logs]
-        print(old_logs)
-        print(new_logs)
 
         old_lines=[]
         log=self.create_log()
