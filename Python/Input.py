@@ -122,6 +122,7 @@ class Input(object):
         """
         log=[]
         log.append(str(datetime.datetime.now()))
+        log.append("BASH: python3 "+" ".join(sys.argv))
         log.append("Program: "+__main__.__file__)
         log.append("Version: "+str(self.version))
         log.append("Input options: "+self.filename)
