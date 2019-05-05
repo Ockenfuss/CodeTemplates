@@ -36,9 +36,7 @@ class Input(object):
     def getKeys(self, option, section):
         """Check the existence of the given keys and choose defaults if they are 'None'."""
         if section==None:
-            if(len(self.options.keys())>1):
-                print("Warning: No section specified, but multiple sections available.")
-            section=list(self.options.keys())[0]#possibility to specify standard section
+            section="DEFAULT"#possibility to specify standard section
         if option==None:
             option=list(self.options[section].keys())[0]#possibility to specify standard option
         return option, section
@@ -126,8 +124,8 @@ class Input(object):
         log.append("Program: "+__main__.__file__)
         log.append("Version: "+str(self.version))
         log.append("Input options: "+self.filename)
+        log.append("**************************")
         for sec in self.options.keys():
-            log.append("**************************")
             log.append("---"+str(sec)+"---")
             for opt in self.options[sec].keys():
                 log.append(str(opt)+": " + str(self.get(opt,sec)))
