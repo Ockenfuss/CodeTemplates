@@ -1,0 +1,14 @@
+Example log for data1: Only some numbers
+##############################################################
+##############################################################
+2019-05-05 22:11:31.371630
+BASH: python3 Example.py Example.ini -s
+Program: Example.py
+Version: 1.0
+Input options: Example.ini
+**************************
+---DEFAULT---
+save: Data2.dat
+data: Data1.dat
+option2: 1
+option1: Foo
