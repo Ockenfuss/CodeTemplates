@@ -1,11 +1,8 @@
 #Example log for data1: Only some numbers
 
-#now this gets longer
-
-#another line
 ##############################################################
 ##############################################################
-#2019-05-14 17:46:14.629093
+#2019-05-14 17:45:51.404112
 cd /media/WINDOWS_DATA/Documents/CodeTemplates/MyPython/ExampleInput
 python3 Example.py Example.ini -s
 #Program: Example.py
@@ -13,7 +10,7 @@ python3 Example.py Example.ini -s
 #Input options: Example.ini
 #**************************
 #---DEFAULT---
-#option2: 1
 #option1: Foo
-#save: Data2.dat
+#option2: 1
 #data: Data1.dat
+#save: Data2.dat

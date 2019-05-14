@@ -1,11 +1,11 @@
-from Python import Input as Inp
+from MyPython import Input as Inp
 import argparse
 import numpy as np
 
 #########################################################################
 #An Example program on how to use the input logger
 #########################################################################
-VERSION="1.0"
+VERSION="1.1"
 par=argparse.ArgumentParser()
 par.add_argument('infile')
 par.add_argument('-s',action='store_true')

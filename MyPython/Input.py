@@ -4,7 +4,7 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.0.3"
+VERSION="1.1.0"
 
 
 
@@ -119,16 +119,17 @@ class Input(object):
             array -- array with lines including linebreak. 
         """
         log=[]
-        log.append(str(datetime.datetime.now()))
-        log.append("BASH: python3 "+" ".join(sys.argv))
-        log.append("Program: "+__main__.__file__)
-        log.append("Version: "+str(self.version))
-        log.append("Input options: "+self.filename)
-        log.append("**************************")
+        log.append("#"+str(datetime.datetime.now()))
+        log.append("cd "+os.getcwd())
+        log.append("python3 "+" ".join(sys.argv))
+        log.append("#Program: "+__main__.__file__)
+        log.append("#Version: "+str(self.version))
+        log.append("#Input options: "+self.filename)
+        log.append("#**************************")
         for sec in self.options.keys():
-            log.append("---"+str(sec)+"---")
+            log.append("#---"+str(sec)+"---")
             for opt in self.options[sec].keys():
-                log.append(str(opt)+": " + str(self.get(opt,sec)))
+                log.append("#"+str(opt)+": " + str(self.get(opt,sec)))
         log=[l+"\n" for l in log]        
         return log
 
