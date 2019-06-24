@@ -4,7 +4,7 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.2.0"
+VERSION="1.3.0"
 
 
 
@@ -22,23 +22,24 @@ class Input(object):
     inp.convert_type(int, "option2")
     """
 
-    def __init__(self,filename, version, def_opts={}):
+    def __init__(self,infilename, version, def_opts={}):
         """Create Input parser.
 
         Arguments:
             object {Input} -- the parser object
-            filename {str} -- the file with the input options
+            infilename {str} -- the file with the input options. Set to 'None' if not given.
             version {str} -- version of the program
 
         Keyword Arguments:
             def_opts {dict} -- dictionary with default input options and values. (default: {{}})
         """
-        self.filename=filename
+        self.filename=infilename
         self.version=version
         self.options={}
         self.config = configparser.ConfigParser(def_opts)
         self.config._interpolation = configparser.ExtendedInterpolation()
-        self.config.read(filename)
+        if infilename is not None:
+            self.config.read(infilename)
         for sec in self.config:
             self.options[sec]={}
             for key in self.config[sec]:
@@ -135,7 +136,7 @@ class Input(object):
         log.append("python3 "+" ".join(sys.argv))
         log.append("#Program: "+__main__.__file__)
         log.append("#Version: "+str(self.version))
-        log.append("#Input options: "+self.filename)
+        log.append("#Input options: "+str(self.filename))
         log.append("#**************************")
         for sec in self.options.keys():
             log.append("#---"+str(sec)+"---")
