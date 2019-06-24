@@ -4,21 +4,32 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.1.0"
+VERSION="1.2.0"
 
 
 
 class Input(object):
-    """Parser to read inputfiles and create logs."""
-    
+    """Parser to read inputfiles and create logs.
+
+    Example usage:\n
+    import argparse
+    VERSION="1.1"
+    par=argparse.ArgumentParser()
+    par.add_argument('infile')
+    par.add_argument('-s',action='store_true')
+    args=par.parse_args()
+    inp=Inp.Input(args.infile,version=VERSION)
+    inp.convert_type(int, "option2")
+    """
+
     def __init__(self,filename, version, def_opts={}):
         """Create Input parser.
-        
+
         Arguments:
             object {Input} -- the parser object
             filename {str} -- the file with the input options
             version {str} -- version of the program
-        
+
         Keyword Arguments:
             def_opts {dict} -- dictionary with default input options and values. (default: {{}})
         """
@@ -43,11 +54,11 @@ class Input(object):
 
     def get(self,  option=None,section=None):
         """Return the specified option.
-        
+
         Keyword Arguments:
             option {string} -- The option to be returned. (default: {First option})
             section {string} -- The section where the option is located. (default: {First section})
-        
+
         Returns:
             value -- value for the given option in the given section 
         """
@@ -56,10 +67,10 @@ class Input(object):
 
     def set(self, value, option=None, section=None):
         """Set an option to a specific value.
-        
+
         Arguments:
             value {obj} -- Value to be placed in the options dictionary.
-        
+
         Keyword Arguments:
             option {str} -- Option to be set. (default: {None})
             section {str} -- Section where the option is located. (default: {None})
@@ -69,10 +80,10 @@ class Input(object):
 
     def convert_type(self, dtype, option=None, section=None):
         """Convert an input option from string to a given type.
-        
+
         Arguments:
             dtype {type} -- Either int, float, or bool.
-        
+
         Keyword Arguments:
             option {string} -- The option to be converted. (default: {None})
             section {string} -- The section where the option is located (default: {None})
@@ -83,10 +94,10 @@ class Input(object):
 
     def convert_array(self, dtype, option=None, section=None, sep=",", removeSpaces=False):
         """Convert an input option from string to an array of the given type.
-        
+
         Arguments:
             dtype {type} -- Type to convert the array element, e.g. str, int, float
-        
+
         Keyword Arguments:
             option {string} -- The option to be converted. (default: {None})
             section {string } -- The section where the option is located (default: {None})
@@ -104,7 +115,7 @@ class Input(object):
 
     def create_log(self):
         """Create a log of the Input object.
-        
+
         Example:
         Program: Progam1.py
         Version: 1.0.0
@@ -116,7 +127,7 @@ class Input(object):
         user: 1.0
 
         Returns:
-            array -- array with lines including linebreak. 
+            array -- array with lines including linebreak.
         """
         log=[]
         log.append("#"+str(datetime.datetime.now()))
@@ -130,12 +141,12 @@ class Input(object):
             log.append("#---"+str(sec)+"---")
             for opt in self.options[sec].keys():
                 log.append("#"+str(opt)+": " + str(self.get(opt,sec)))
-        log=[l+"\n" for l in log]        
+        log=[l+"\n" for l in log]
         return log
 
     def show_data(self):
         """Print log."""
-        print(*self.create_log())                
+        print(*self.create_log())
 
     def check(self):
         """Perform a consistency check on the input options."""
@@ -146,7 +157,7 @@ class Input(object):
 
     def write_log(self, new_logs, old_logs=[], file_ext=None):
         """Write log to files.
-        
+
         Combine all old logfiles, append the log of the actual program and save them to all new locations given.
 
         Arguments:
