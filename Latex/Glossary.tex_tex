@@ -1,0 +1,29 @@
+\documentclass{article}
+%The Extension .tex_tex is just to prevent programs like vscode to autocompile this file in the template folder.
+% Recipe to compile this file:
+%name as "Glossary.tex"
+% pdflatex Glossary
+% makeglossaries Glossary
+% pdflatex Glossary
+\usepackage[colorlinks]{hyperref}
+\usepackage[acronym]{glossaries}
+
+\newglossaryentry{cosmo}{name=Cosmo,description={NWP model, originally developed by DWD in 1999. \glslink{COSMO}{COSMO}}}
+\newacronym{COSMO}{COSMO}{Consortium for Small-scale Modeling. \gls{cosmo}}
+\newglossaryentry{icon}{name=Icon,description={Global numerical weather prediction model. About 13km resolution. \glslink{ICON}{ICON}}}
+\newacronym{ICON}{ICON}{Icosahedral nonhydrostatic model. \gls{icon}}
+
+
+\makeglossaries
+\begin{document}
+
+%Normal reference: \gls{cosmo}
+%Acronyms can be displayed differently when used the first time.
+%This counter can be influenced by e.g.
+\glsunsetall
+
+%Adding all the elements to the glossary, regardless of whether they are used somewhere:
+\glsaddall
+
+\printglossaries
+\end{document}
