@@ -1,0 +1,14 @@
+#Example log for data1: Only some numbers
+#now this gets longer
+#another line
+##########################################################
+#Sun Oct  6 20:05:29 2019
+
+#Example.c
+#VERSION 1.0.0
+#Input File: Example.ini
+#[default]
+#option1=Foo
+#option2=1
+#data=Data1.dat
+#save=Data2.dat
