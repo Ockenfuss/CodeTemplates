@@ -4,7 +4,7 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.3.0"
+VERSION="1.3.1"
 
 
 
@@ -26,9 +26,9 @@ class Input(object):
         """Create Input parser.
 
         Arguments:
-            object {Input} -- the parser object
-            infilename {str} -- the file with the input options. Set to 'None' if not given.
-            version {str} -- version of the program
+            object {Input} -- the parser object\n
+            infilename {str} -- the file with the input options. Set to 'None' if not given.\n
+            version {str} -- version of the program\n
 
         Keyword Arguments:
             def_opts {dict} -- dictionary with default input options and values. (default: {{}})
@@ -166,7 +166,7 @@ class Input(object):
             new_logs {arr} -- array with new logfiles to be created.
 
         Keyword Arguments:
-            file_ext {str} -- if set, the file extension in the given logfile locations are replaced before the function is executed. (default: {None})
+            file_ext {str} -- if set, the file extensions in the given logfile locations are replaced by 'file_ext' before the function is executed. (default: {None})
         """
         old_logs=np.atleast_1d(old_logs)
         new_logs=np.atleast_1d(new_logs)
