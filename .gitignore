@@ -1,2 +1,14 @@
 
 *.pyc
+
+C/Cinput/\.vscode/
+
+C/Cinput/cinput\.o
+
+C/Cinput/InputExample/Example
+
+C/Cinput/InputExample/Example\.o
+
+C/ASCII/ascii\.o
+
+C/Cinput/ini\.o
