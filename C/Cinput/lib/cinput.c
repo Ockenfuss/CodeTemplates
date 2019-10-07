@@ -17,32 +17,47 @@ void strip_ext(char *fname)
     }
 }
 
-int write_log(char* new_log_path, const char* old_log_path, const char* input_path, const char* program, const char* version)
+int replace_extension_log(char *path, char** path_replaced)
 {
-    strip_ext(new_log_path);
-    char* new_log_path_ext=calloc(strlen(new_log_path)+5, sizeof(char));
-    strcpy(new_log_path_ext, new_log_path);
-    strcat(new_log_path_ext, ".log\0");
+    strip_ext(path);
+    *path_replaced=calloc(strlen(path)+5, sizeof(char));
+    strcpy(*path_replaced, path);
+    strcat(*path_replaced, ".log\0");
+    return 0;
+}
+
+int write_log(char* new_log_path, char* old_log_path, const char* input_path, const char* program, const char* version)
+{
+    char* new_log_path_ext;
+    replace_extension_log(new_log_path, &new_log_path_ext);
 
     FILE* new_logfile;
     char ch; 
 
-    if (strcmp(old_log_path,"")==0)
+    if (strcmp(old_log_path,"")==0)//no old logs
     {
         new_logfile=fopen(new_log_path_ext, "w");
     }
-    else if (strcmp(new_log_path_ext,old_log_path)==0)
+    else //there are old logs
     {
-        new_logfile = fopen(old_log_path, "a");
+        char* old_log_path_ext;
+        replace_extension_log(old_log_path, &old_log_path_ext);
+        if (strcmp(new_log_path_ext,old_log_path_ext)==0)//old log equals new log: append old log
+        {
+            new_logfile = fopen(old_log_path_ext, "a");
+        }
+        else//normal case: copy old log to new log
+        {
+            new_logfile=fopen(new_log_path_ext, "w");
+            FILE* old_logfile = fopen(old_log_path_ext, "r");
+            while((ch = fgetc(old_logfile)) != EOF)
+            fputc(ch,new_logfile);
+            fclose(old_logfile);
+        }
+        free(old_log_path_ext);
     }
-    else
-    {
-        new_logfile=fopen(new_log_path_ext, "w");
-        FILE* old_logfile = fopen(old_log_path, "r");
-        while((ch = fgetc(old_logfile)) != EOF)
-        fputc(ch,new_logfile);
-        fclose(old_logfile);
-    }
+    free(new_log_path_ext);
+
 
     fprintf(new_logfile, "\n##########################################################\n");
     time_t t;   // not a primitive datatype

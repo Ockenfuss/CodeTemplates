@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     }
     fclose(result);
 
-    write_log(config.save, "Data1.log", "Example.ini", "Example.c", version);
+    write_log(config.save, config.data, "Example.ini", "Example.c", version);
     
     return 0;
 }
