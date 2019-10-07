@@ -12,3 +12,13 @@ C/Cinput/InputExample/Example\.o
 C/ASCII/ascii\.o
 
 C/Cinput/ini\.o
+
+C/Cinput/Example
+
+C/Cinput/Example\.o
+
+C/Cinput/lib/ini\.o
+
+C/Cinput/lib/ascii\.o
+
+C/Cinput/lib/cinput\.o

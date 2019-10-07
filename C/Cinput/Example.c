@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../ini.h"
-#include "../cinput.h"
-#include "../../ASCII/ascii.h"
+#include "includelib/ini.h"
+#include "includelib/cinput.h"
+#include "includelib/ascii.h"
 
 const char* version="1.0.0";
 
@@ -28,7 +28,7 @@ typedef struct
     int option2;
     const char* option1;
     char* data;
-    const char* save;
+    char* save;
 } configuration;
 
 static int handler(void* user, const char* section, const char* name,
@@ -61,7 +61,6 @@ int main(int argc, char* argv[])
     }
     printf("Config loaded from 'Example.ini': version=%d, name=%s, email=%s\n",
         config.option2, config.data, config.save);
-
     double* data;
     int length;
     read_1c_file(config.data,&data, &length);
@@ -74,7 +73,7 @@ int main(int argc, char* argv[])
     }
     fclose(result);
 
-    write_log("Data2.log", "Data1.log", "Example.ini", "Example.c", version);
+    write_log(config.save, "Data1.log", "Example.ini", "Example.c", version);
     
     return 0;
 }

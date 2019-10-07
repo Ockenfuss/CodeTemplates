@@ -4,22 +4,40 @@
 #include <string.h>
 #include <time.h>
 
-int write_log(const char* new_log_path, const char* old_log_path, const char* input_path, const char* program, const char* version)
+void strip_ext(char *fname)
 {
+    char *end = fname + strlen(fname);
+
+    while (end > fname && *end != '.' && *end != '\\' && *end != '/') {
+        --end;
+    }
+    if ((end > fname && *end == '.') &&
+        (*(end - 1) != '\\' && *(end - 1) != '/')) {
+        *end = '\0';
+    }
+}
+
+int write_log(char* new_log_path, const char* old_log_path, const char* input_path, const char* program, const char* version)
+{
+    strip_ext(new_log_path);
+    char* new_log_path_ext=calloc(strlen(new_log_path)+5, sizeof(char));
+    strcpy(new_log_path_ext, new_log_path);
+    strcat(new_log_path_ext, ".log\0");
+
     FILE* new_logfile;
     char ch; 
 
     if (strcmp(old_log_path,"")==0)
     {
-        new_logfile=fopen(new_log_path, "w");
+        new_logfile=fopen(new_log_path_ext, "w");
     }
-    else if (strcmp(new_log_path,old_log_path)==0)
+    else if (strcmp(new_log_path_ext,old_log_path)==0)
     {
         new_logfile = fopen(old_log_path, "a");
     }
     else
     {
-        new_logfile=fopen(new_log_path, "w");
+        new_logfile=fopen(new_log_path_ext, "w");
         FILE* old_logfile = fopen(old_log_path, "r");
         while((ch = fgetc(old_logfile)) != EOF)
         fputc(ch,new_logfile);
