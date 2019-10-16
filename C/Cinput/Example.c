@@ -51,6 +51,7 @@ static int handler(void* user, const char* section, const char* name,
     return 1;
 }
 
+
 int main(int argc, char* argv[])
 {
     configuration config;

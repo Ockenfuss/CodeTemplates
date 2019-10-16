@@ -26,7 +26,7 @@ int replace_extension_log(char *path, char** path_replaced)
     return 0;
 }
 
-int write_log(char* new_log_path, char* old_log_path, const char* input_path, const char* program, const char* version)
+int write_log(char* new_log_path, char* old_log_path, char* input_path, const char* program, const char* version)
 {
     char* new_log_path_ext;
     replace_extension_log(new_log_path, &new_log_path_ext);
