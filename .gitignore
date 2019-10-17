@@ -2,6 +2,7 @@
 *.pyc
 
 C/Cinput/\.vscode/
+.vscode/
 
 C/Cinput/cinput\.o
 
@@ -22,3 +23,6 @@ C/Cinput/lib/ini\.o
 C/Cinput/lib/ascii\.o
 
 C/Cinput/lib/cinput\.o
+C/MyCTools/MyCTools.o
+C/MyCTools/MyCTools_test.o
+C/MyCTools/MyCTools_test
