@@ -183,7 +183,7 @@ class Input(object):
             old_lines.append("##############################################################")
             oldfile.close()
         old_lines.append("##############################################################")
-        old_lines=[l+"\n" for l in old_lines]
+        old_lines=[l for l in old_lines]
         for new in new_logs:
             newfile=open(new, "w")
             newfile.writelines(old_lines)

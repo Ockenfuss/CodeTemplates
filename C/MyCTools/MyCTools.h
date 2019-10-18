@@ -5,9 +5,11 @@ int read3d_float_fromfile(char *filename, float*** array, int skip_header);
 //Output array
 //float
 int array2d_float_tostream(FILE *stream, float** array, int nx, int ny);
+int array2d_float_tostream2(FILE* stream, float**array, int nx, int ny);
 int array3d_float_tostream(FILE* stream, float***array, int nx, int ny, int nz);
 int array2d_float_print(float** array, int nx, int ny);
 int array2d_float_to_file(char *filename, float** array, int nx, int ny);
+int array2d_float_to_file2(char *filename, float** array, int nx, int ny);
 int array3d_float_to_file(char *filename, float*** array, int nx, int ny,int nz);
 //int
 int array2d_int_tostream(FILE *stream, int** array, int nx, int ny);

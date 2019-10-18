@@ -25,6 +25,8 @@ Test: Test.o
 Test.o: Test.c
 	gcc -c Test.c
 
+Example.o: Example.c
+	gcc -c Example.c -g -iquote $(INCDIR)
 
 #If one of the c files was changed, we call the sub-make to update the object files
 $(OBJDIR)/%.o: $(OBJDIR)/%.c

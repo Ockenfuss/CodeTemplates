@@ -7,5 +7,5 @@ objfiles=$(srcfiles:.c=.o)
 
 all: $(objfiles)
 
-%.o: %.c
-	gcc -c $< -iquote $(INCDIR)
+%.o: %.c Makefile
+	gcc -c $< -g -iquote $(INCDIR)

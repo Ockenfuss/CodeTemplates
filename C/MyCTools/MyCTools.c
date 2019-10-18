@@ -63,6 +63,19 @@ int array2d_float_tostream(FILE *stream, float** array, int nx, int ny)
     return 0;
 }
 
+int array2d_float_tostream2(FILE* stream, float**array, int nx, int ny)
+{
+    for (int i = 0; i < nx; i++)
+    {
+        for (int j = 0; j < ny; j++)
+        {
+            fprintf(stream, "%d\t%d\t%e\n",i,j,array[i][j]);
+        }
+    }
+    return 0;
+}
+
+
 int array3d_float_tostream(FILE* stream, float***array, int nx, int ny, int nz)
 {
     for (int i = 0; i < nx; i++)
@@ -90,6 +103,14 @@ int array2d_float_to_file(char *filename, float** array, int nx, int ny)
     FILE *fp;
     fp=fopen(filename, "w+");  // "a+": append, "w+": delete old file
     array2d_float_tostream(fp, array, nx, ny);
+    fclose(fp);
+    return 0;
+}
+int array2d_float_to_file2(char *filename, float** array, int nx, int ny)
+{
+    FILE *fp;
+    fp=fopen(filename, "w+");  // "a+": append, "w+": delete old file
+    array2d_float_tostream2(fp, array, nx, ny);
     fclose(fp);
     return 0;
 }
