@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 void strip_ext(char *fname)
 {
@@ -66,7 +67,9 @@ int write_log(char* new_log_path, char* old_log_path, char* input_path, const ch
     fputs(program, new_logfile);
     fprintf(new_logfile, "\n#VERSION ");
     fputs(version, new_logfile);
-    fprintf(new_logfile, "\n#Input File: %s", input_path);
+    char input_path_abs[PATH_MAX];
+    realpath(input_path, input_path_abs);
+    fprintf(new_logfile, "\n#Input File: %s", input_path_abs);
 
     if (strcmp(input_path,"")!=0)
     {
