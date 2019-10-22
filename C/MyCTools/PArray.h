@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 //Input array
-int read3d_float_fromfile(char *filename, float*** array, int skip_header);
+int read3d_float_fromfile(char *filename, float*** array, int skip_header, int index_offset);
 //Output array
 //float
 int array2d_float_tostream(FILE *stream, float** array, int nx, int ny);

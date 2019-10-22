@@ -15,10 +15,11 @@ char* VERSION="1.0.0";
  * 
  * @param filename 
  * @param array 
- * @param skip_header 
+ * @param skip_header number of lines to be skipped in the beginning
+ * @param index_offset Number to be added to every index in the file before reading (usually 0 or 1)
  * @return int 
  */
-int read3d_float_fromfile(char *filename, float*** array, int skip_header)
+int read3d_float_fromfile(char *filename, float*** array, int skip_header, int index_offset)
 {
     FILE *fp;
    if ( (fp = fopen(filename,"r")) == NULL) {
@@ -40,7 +41,7 @@ int read3d_float_fromfile(char *filename, float*** array, int skip_header)
     if(line_count>skip_header)
     {
         sscanf(*gptr, "%d %d %d %e", &i1, &i2, &i3, &f1);
-        array[i1][i2][i3]=f1;
+        array[i1+index_offset][i2+index_offset][i3+index_offset]=f1;
     }
     // fputs(*gptr,stdout);
    }
