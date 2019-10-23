@@ -1,0 +1,38 @@
+
+
+
+
+%Simple Figure
+\begin{figure}[t]\vspace*{2mm}
+\begin{center}
+\includegraphics[width=8.3cm]{sample-figure}
+\end{center}
+\caption{TEXT}
+\label{fig:sample-figure}
+\end{figure}
+
+%To create subfigures:
+\begin{figure}[t]\vspace*{2mm}
+\begin{center}
+\includegraphics[width=8.3cm]{sample-figure1}
+\end{center}
+\caption{TEXT}
+\label{fig:sample-figure1}
+\end{figure}
+
+\addtocounter{figure}{-1}%Counter not increasing figure
+\renewcommand{\thefigure}{\arabic{figure}a}%Replace the word "Figure"
+\begin{figure*}[t]
+    \vspace*{2mm}
+    \begin{center}
+    \includegraphics[width=0.97\textwidth]{../Figures_PDF/Results/TotalityIRWater11Gap.pdf}
+    \end{center}
+    \caption{Same as \autoref{fig:TotalityUV}, but for wavelengths from $600$ nm to $1020$ nm.}
+    \label{fig:TotalityIR}
+\end{figure*}
+\renewcommand{\thefigure}{\arabic{figure}}%Replace again
+
+%If Figures should stretch over multiple text columns
+\begin{figure*}
+...
+\end{figure*}

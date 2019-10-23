@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%Optional further packages
+\usepackage{hyperref}%If you want to use autoref
+
+% \addbibresource{Quellen.bib}
+\mathversion{normal}
+\pdfinfo{
+  /Title (PeerReview_R2_Answers1)
+  /Author (Paul Ockenfuß)
+  }
+\title{Answers to Referee1}
+
+\begin{document}
+\maketitle
+\section{Answers}
+\end{document}
