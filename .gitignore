@@ -26,3 +26,6 @@ C/Cinput/lib/cinput\.o
 C/MyCTools/MyCTools.o
 C/MyCTools/MyCTools_test.o
 C/MyCTools/MyCTools_test
+C/MyCTools/LinArray_test
+C/MyCTools/LinArray_test.o
+C/MyCTools/LinArray.o

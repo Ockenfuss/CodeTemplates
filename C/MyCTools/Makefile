@@ -8,7 +8,9 @@ LFLAGS=-g
 
 
 
-MyCTools_test:MyCTools_test.o MyCTools.o
+PArray_test:PArray_test.o PArray.o
+	$(CC) -o $@ $^ $(LFLAGS)
+LinArray_test:LinArray_test.o LinArray.o
 	$(CC) -o $@ $^ $(LFLAGS)
 
 
