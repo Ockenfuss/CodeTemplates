@@ -48,21 +48,21 @@ int read3d_float_fromfile(const char *filename, arr3d_f* array, const int skip_h
 //=======================Get and set values==================================================================================================================
 //3D
 //Float
-float get3d_f(arr3d_f* arr, size_t x, size_t y, size_t z)
+float get3d_f(const arr3d_f* arr, const size_t x, const size_t y, const size_t z)
 {
     return arr->data[arr->stridex*x+arr->stridey*y+arr->stridez*z];
 }
-int set3d_f(arr3d_f* arr, size_t x, size_t y, size_t z, float val)
+int set3d_f(arr3d_f* arr, const size_t x, const size_t y, const size_t z, const float val)
 {
     arr->data[arr->stridex*x+arr->stridey*y+arr->stridez*z]=val;
     return 0;
 }
 //Integer
-int get3d_i(arr3d_i* arr, size_t x, size_t y, size_t z)
+int get3d_i(const arr3d_i* arr, const size_t x, const size_t y, const size_t z)
 {
     return arr->data[arr->stridex*x+arr->stridey*y+arr->stridez*z];
 }
-int set3d_i(arr3d_i* arr, size_t x, size_t y, size_t z, int val)
+int set3d_i(arr3d_i* arr, const size_t x, const size_t y, const size_t z, const int val)
 {
     arr->data[arr->stridex*x+arr->stridey*y+arr->stridez*z]=val;
     return 0;
@@ -70,11 +70,11 @@ int set3d_i(arr3d_i* arr, size_t x, size_t y, size_t z, int val)
 
 //4D
 //Float
-float get4d_f(arr4d_f* arr, size_t a, size_t b, size_t c, size_t d)
+float get4d_f(const arr4d_f* arr, const size_t a, const size_t b, const size_t c, const size_t d)
 {
     return arr->data[arr->stridea*a+arr->strideb*b+arr->stridec*c+arr->strided*d];
 }
-int set4d_f(arr4d_f* arr, size_t a, size_t b, size_t c, size_t d, float val)
+int set4d_f(arr4d_f* arr, const size_t a, const size_t b, const size_t c, const size_t d, const float val)
 {
     arr->data[arr->stridea*a+arr->strideb*b+arr->stridec*c+arr->strided*d]=val;
     return 0;

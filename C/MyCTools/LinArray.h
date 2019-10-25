@@ -45,15 +45,15 @@ typedef struct arr4d_f{
 //=======================Get and set values==================================================================================================================
 //3D
 //Float
-float get3d_f(arr3d_f* arr, size_t x, size_t y, size_t z);
-int set3d_f(arr3d_f* arr, size_t x, size_t y, size_t z, float val);
+float get3d_f(const arr3d_f* arr, const size_t x, const size_t y, const size_t z);
+int set3d_f(arr3d_f* arr, const size_t x, const size_t y, const size_t z, const float val);
 //Integer
-int get3d_i(arr3d_i* arr, size_t x, size_t y, size_t z);
-int set3d_i(arr3d_i* arr, size_t x, size_t y, size_t z, int val);
+int get3d_i(const arr3d_i* arr, const size_t x, const size_t y, const size_t z);
+int set3d_i(arr3d_i* arr, const size_t x, const size_t y, const size_t z, const int val);
 //4D
 //Float
-float get4d_f(arr4d_f* arr, size_t a, size_t b, size_t c, size_t d);
-int set4d_f(arr4d_f* arr, size_t a, size_t b, size_t c, size_t d, float val);
+float get4d_f(const arr4d_f* arr, const size_t a, const size_t b, const size_t c, const size_t d);
+int set4d_f(arr4d_f* arr, const size_t a, const size_t b, const size_t c, const size_t d, const float val);
 //=======================Reading from file==================================================================================================================
 //3D
 //Float
