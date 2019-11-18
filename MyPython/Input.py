@@ -16,6 +16,7 @@ class Input(object):
     VERSION="1.1"
     par=argparse.ArgumentParser()
     par.add_argument('infile')
+    par.add_argument('number', type=int)
     par.add_argument('-s',action='store_true')
     args=par.parse_args()
     inp=Inp.Input(args.infile,version=VERSION)

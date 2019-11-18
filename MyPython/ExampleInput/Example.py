@@ -13,6 +13,7 @@ args=par.parse_args()
 print(args.infile)
 inp=Inp.Input(args.infile,version=VERSION)
 inp.convert_type(int, "option2")
+inp.convert_array(int, "numbers", removeSpaces=True)
 inp.show_data()
 
 dat=np.genfromtxt(inp.get("data"))
