@@ -63,9 +63,13 @@ int read3d_float_fromfile(const char *filename, arr3d_f* array, const int skip_h
 //Float
 int array3d_float_to_file(char *filename, arr3d_f* array);
 int array3d_float_tostream(FILE* stream, arr3d_f* array);
+int array3d_float_to_file1(char *filename, arr3d_f* array);
+int array3d_float_tostream1(FILE* stream, arr3d_f* array);
 //Integer
 int array3d_int_to_file(char *filename, arr3d_i* array);
 int array3d_int_tostream(FILE* stream, arr3d_i* array);
+int array3d_int_to_file1(char *filename, arr3d_i* array);
+int array3d_int_tostream1(FILE* stream, arr3d_i* array);
 //=======================Memory managment==================================================================================================================
 //3D
 //Float

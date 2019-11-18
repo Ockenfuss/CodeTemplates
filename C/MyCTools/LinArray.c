@@ -95,6 +95,26 @@ int array3d_float_to_file(char *filename, arr3d_f* array)
     return 0;
 }
 
+/**
+ * @brief  Write 3d float array to file using one based indices
+ * @note   
+ * @param  *filename: The file to write in. Will be overwritten if existing.
+ * @param  array: the array to write to the specified file
+ * @retval 
+ */
+int array3d_float_to_file1(char *filename, arr3d_f* array)
+{
+    FILE *fp;
+    if ( (fp = fopen(filename,"w")) == NULL) {
+        fprintf(stderr, "Could not open %s!\n", filename);
+        return -1;
+    }
+    array3d_float_tostream1(fp, array);
+    fclose(fp);
+    return 0;
+}
+
+
 int array3d_float_tostream(FILE* stream, arr3d_f* array)
 {
     for (int i = 0; i < array->nx; i++)
@@ -104,6 +124,28 @@ int array3d_float_tostream(FILE* stream, arr3d_f* array)
             for (int k = 0; k < array->nz; k++)
             {
                 fprintf(stream, "%d\t%d\t%d\t%e\n",i,j,k,get3d_f(array, i,j,k));
+            }
+        }
+    }
+    return 0;
+}
+
+/**
+ * @brief  Write 3d float array to stream with one-based indices
+ * @note   
+ * @param  stream: IO-stream to write
+ * @param  array: the array to write to the stream
+ * @retval 0 if success
+ */
+int array3d_float_tostream1(FILE* stream, arr3d_f* array)
+{
+    for (int i = 0; i < array->nx; i++)
+    {
+        for (int j = 0; j < array->ny; j++)
+        {
+            for (int k = 0; k < array->nz; k++)
+            {
+                fprintf(stream, "%d\t%d\t%d\t%e\n",i+1,j+1,k+1,get3d_f(array, i,j,k));
             }
         }
     }
@@ -122,6 +164,25 @@ int array3d_int_to_file(char *filename, arr3d_i* array)
     return 0;
 }
 
+/**
+ * @brief  Write 3d int array to file using one based indices
+ * @note   
+ * @param  *filename: The file to write in. Will be overwritten if existing.
+ * @param  array: the array to write to the specified file
+ * @retval 
+ */
+int array3d_int_to_file1(char *filename, arr3d_i* array)
+{
+    FILE *fp;
+    if ( (fp = fopen(filename,"w")) == NULL) {
+        fprintf(stderr, "Could not open %s!\n", filename);
+        return -1;
+    }
+    array3d_int_tostream1(fp, array);
+    fclose(fp);
+    return 0;
+}
+
 int array3d_int_tostream(FILE* stream, arr3d_i* array)
 {
     for (int i = 0; i < array->nx; i++)
@@ -131,6 +192,27 @@ int array3d_int_tostream(FILE* stream, arr3d_i* array)
             for (int k = 0; k < array->nz; k++)
             {
                 fprintf(stream, "%d\t%d\t%d\t%d\n",i,j,k,get3d_i(array, i,j,k));
+            }
+        }
+    }
+    return 0;
+}
+/**
+ * @brief  Write 3d int array to stream with one-based indices
+ * @note   
+ * @param  stream: IO-stream to write
+ * @param  array: the array to write to the stream
+ * @retval 0 if success
+ */
+int array3d_int_tostream1(FILE* stream, arr3d_i* array)
+{
+    for (int i = 0; i < array->nx; i++)
+    {
+        for (int j = 0; j < array->ny; j++)
+        {
+            for (int k = 0; k < array->nz; k++)
+            {
+                fprintf(stream, "%d\t%d\t%d\t%d\n",i+1,j+1,k+1,get3d_i(array, i,j,k));
             }
         }
     }
