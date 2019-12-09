@@ -237,8 +237,9 @@ arr3d_f* calloc3d_float(const size_t nx, const size_t ny, const size_t nz)
 
 int free3d_float(arr3d_f* arr)
 {
-    return 0;
     free(arr->data);
+    free(arr);
+    return 0;
 }
 //Integer
 arr3d_i* calloc3d_int(const size_t nx, const size_t ny, const size_t nz)
@@ -257,8 +258,9 @@ arr3d_i* calloc3d_int(const size_t nx, const size_t ny, const size_t nz)
 
 int free3d_int(arr3d_i* arr)
 {
-    return 0;
     free(arr->data);
+    free(arr);
+    return 0;
 }
 //4D
 //Float
@@ -280,8 +282,9 @@ arr4d_f* calloc4d_float(const size_t na, const size_t nb, const size_t nc, const
 
 int free4d_float(arr4d_f* arr)
 {
-    return 0;
     free(arr->data);
+    free(arr);
+    return 0;
 }
 
 //=======================Copy Array==================================================================================================================

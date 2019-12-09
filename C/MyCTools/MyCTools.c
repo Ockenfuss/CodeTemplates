@@ -12,7 +12,7 @@
  */
 int readstring_f(char* str, char* delim, float* val, const size_t n_val)
 {
-    int length=strlen(str);
+    int length=strlen(str)+1;//strlen does not count \0!
     char* str_cp=malloc(length*sizeof(char));
     strcpy(str_cp, str);
     // char *token = NULL;
