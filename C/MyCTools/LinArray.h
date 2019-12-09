@@ -58,6 +58,7 @@ int set4d_f(arr4d_f* arr, const size_t a, const size_t b, const size_t c, const 
 //3D
 //Float
 int read3d_float_fromfile(const char *filename, arr3d_f* array, const int skip_header, const int index_offset);
+int read3d_float_fromfile1(const char *filename, arr3d_f* array, const int skip_header, const int index_offset);
 //=======================Wrtiting and Printing==================================================================================================================
 //3D
 //Float

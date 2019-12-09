@@ -42,15 +42,14 @@ char* readline_file(const char *filename, int line_number)
     }
     int nRet;
     int line_count = 0;
-    size_t *t = malloc(0);
-    char **gptr = malloc(sizeof(char *));
-    *gptr = NULL;
-    while ((nRet = getline(gptr, t, fp)) > 0)
+    size_t t = 0;
+    char *gptr = NULL;
+    while ((nRet = getline(&gptr, &t, fp)) > 0)
     {
         line_count++;
         if (line_count == line_number)
         {
-            return *gptr;
+            return gptr;
         }
     }
     fclose(fp);

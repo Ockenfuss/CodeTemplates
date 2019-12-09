@@ -13,35 +13,34 @@ char* VERSION="1.0.0";
  * @param filename 
  * @param array 
  * @param skip_header number of lines to be skipped in the beginning
- * @param index_offset Number to be added to every index in the file before reading (usually 0 or 1)
+ * @param index_offset Number to be added to every index in the file before reading (usually 0 or -1)
  * @return int 
  */
 int read3d_float_fromfile(const char *filename, arr3d_f* array, const int skip_header, const int index_offset)
 {
     FILE *fp;
    if ( (fp = fopen(filename,"r")) == NULL) {
-      fprintf(stderr, "Could not open %s!\n", filename);
+      fprintf(stderr, "Unable to open %s!\n", filename);
       return -1;
    }
-   int nRet;
    int line_count=0;
-   size_t *t = malloc(0);
+   size_t t=0;
 
-   char **gptr = malloc(sizeof(char*));
-   *gptr = NULL;
+   char *gptr = NULL;
 
     int i1, i2, i3;
     float f1;
-   while( (nRet=getline(gptr, t, fp)) > 0)
+   while( getline(&gptr, &t, fp) > 0)
    {
     line_count++;
     if(line_count>skip_header)
     {
-        sscanf(*gptr, "%d %d %d %e", &i1, &i2, &i3, &f1);
+        sscanf(gptr, "%d %d %d %e", &i1, &i2, &i3, &f1);
         set3d_f(array,i1+index_offset,i2+index_offset,i3+index_offset,f1);
     }
     // fputs(*gptr,stdout);
    }
+   free(gptr);
    fclose(fp);
   return 0;
 }
