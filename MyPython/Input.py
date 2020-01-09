@@ -4,7 +4,8 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.4.0"
+import hashlib
+VERSION="1.5.0"
 
 
 
@@ -39,6 +40,7 @@ class Input(object):
         self.options={}
         self.config = configparser.ConfigParser()
         self.config._interpolation = configparser.ExtendedInterpolation()
+        self.outfilename=[]
         for sec in def_opts:
             self.options[sec]={}
             for key in def_opts[sec]:
@@ -124,6 +126,37 @@ class Input(object):
         else:
             array=np.fromstring(self.options[section][option], sep=sep, dtype=dtype)
         self.set(array, option, section)
+    
+    def add_outfile(self, output_files):
+        """Add the name of the outputfiles of your program. They will be listed in the logfile, together with their hash value.
+        
+        Arguments:
+            output_files {string or list of strings} -- The paths of the outputfiles. Relative paths will be interpreted relative to the currend working directory.
+        """
+        output_files=np.atleast_1d(output_files)
+        for path in output_files:
+            abspath=os.path.abspath(path)
+            if not os.path.isfile(abspath):
+                printf("WARNING: at the moment, there is no such file: "+abspath)
+            self.outfilename.append(abspath)
+
+    def hash_file(self, file):
+        """Calculate the hash of a file.
+        
+        Arguments:
+            file {str} -- The path of the file
+        
+        Returns:
+            str -- The hexadecimal sha256 hash of the file.
+        """
+        BLOCK_SIZE = 65536 # The size of each read from the file
+        file_hash = hashlib.sha256() # Create the hash object, can use something other than `.sha256()` if you wish
+        with open(file, 'rb') as f: # Open the file to read it's bytes
+            fb = f.read(BLOCK_SIZE) # Read from the file. Take in the amount declared above
+            while len(fb) > 0: # While there is still data being read from the file
+                file_hash.update(fb) # Update the hash
+                fb = f.read(BLOCK_SIZE) # Read the next block from the file
+        return file_hash.hexdigest() # Get the hexadecimal digest of the hash
 
     def create_log(self):
         """Create a log of the Input object.
@@ -153,6 +186,12 @@ class Input(object):
             log.append("#---"+str(sec)+"---")
             for opt in self.options[sec].keys():
                 log.append("#"+str(opt)+": " + str(self.get(opt,sec)))
+        if len(self.outfilename)>0:
+            log.append("#**************************")
+            log.append("#Output files created:")
+            for path in self.outfilename:
+                log.append("#%PATH% "+path)
+                log.append("#%HASH% "+self.hash_file(path))
         log=[l+"\n" for l in log]
         return log
 
