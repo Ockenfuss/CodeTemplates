@@ -5,7 +5,7 @@ import os
 import __main__
 import datetime
 import hashlib
-VERSION="1.5.0"
+VERSION="1.5.1"
 
 
 
@@ -42,9 +42,11 @@ class Input(object):
         self.config._interpolation = configparser.ExtendedInterpolation()
         self.outfilename=[]
         for sec in def_opts:
-            self.options[sec]={}
+            # self.options[sec]={}
+            self.config.add_section(sec)
             for key in def_opts[sec]:
-                self.options[sec][key]=def_opts[sec][key]
+                # self.options[sec][key]=def_opts[sec][key]
+                self.config.set(sec, key, def_opts[sec][key])
         if infilename is not None:
             self.config.read(infilename)
         for sec in self.config:
@@ -63,6 +65,14 @@ class Input(object):
         return option, section
 
     def listKeys(self, section):
+        """Return all keys in a given section
+        
+        Arguments:
+            section {key} -- The key of the section
+        
+        Returns:
+            dict_keys -- The keys available within the section.
+        """
         if section==None:
             section=="DEFAULT"
         return self.options[section].keys()
@@ -137,7 +147,7 @@ class Input(object):
         for path in output_files:
             abspath=os.path.abspath(path)
             if not os.path.isfile(abspath):
-                printf("WARNING: at the moment, there is no such file: "+abspath)
+                print("WARNING: at the moment, there is no such file: "+abspath)
             self.outfilename.append(abspath)
 
     def hash_file(self, file):
