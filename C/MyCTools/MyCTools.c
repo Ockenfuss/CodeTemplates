@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 /**
  * @brief Read a float array from a given string
  * 
@@ -15,17 +16,23 @@ int readstring_f(char* str, char* delim, float* val, const size_t n_val)
     int length=strlen(str)+1;//strlen does not count \0!
     char* str_cp=malloc(length*sizeof(char));
     strcpy(str_cp, str);
-    // char *token = NULL;
 
     int count=0;
     for (char* token = strtok(str_cp, delim); token != NULL; token = strtok(NULL, delim))
     {
         char *unconverted;
+        if(n_val<count+1)
+        {
+            if(!isspace(*token)){
+                fprintf(stderr, "There are unconverted values remaining: %s\n", token);
+            }
+            break;
+        }
         val[count] = strtof(token, &unconverted);
-        // if (!isspace(*unconverted) && *unconverted != 0)
-        // {
-        //     return -1;
-        // }
+        if (!isspace(*unconverted) && *unconverted != 0)
+        {
+            return -1;
+        }
         count++;
     }
     free(str_cp);
