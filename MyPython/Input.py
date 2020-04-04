@@ -4,7 +4,8 @@ import configparser
 import os
 import __main__
 import datetime
-VERSION="1.3.1"
+import hashlib
+VERSION="1.5.0"
 
 
 
@@ -37,23 +38,34 @@ class Input(object):
         self.filename=infilename
         self.version=version
         self.options={}
-        self.config = configparser.ConfigParser(def_opts)
+        self.config = configparser.ConfigParser()
         self.config._interpolation = configparser.ExtendedInterpolation()
+        self.outfilename=[]
+        for sec in def_opts:
+            self.options[sec]={}
+            for key in def_opts[sec]:
+                self.options[sec][key]=def_opts[sec][key]
         if infilename is not None:
             self.config.read(infilename)
         for sec in self.config:
-            self.options[sec]={}
+            if not (sec in self.options):
+                self.options[sec]={}
             for key in self.config[sec]:
                 self.options[sec][key]=self.config[sec][key]
 
-    def getKeys(self, option, section):
+    def getKey(self, option, section):
         """Check the existence of the given keys and choose defaults if they are 'None'."""
         if section==None:
             section="DEFAULT"#possibility to specify standard section
         if option==None:
             option=list(self.options[section].keys())[0]#possibility to specify standard option
+        option=option.lower()
         return option, section
 
+    def listKeys(self, section):
+        if section==None:
+            section=="DEFAULT"
+        return self.options[section].keys()
     def get(self,  option=None,section=None):
         """Return the specified option.
 
@@ -64,7 +76,7 @@ class Input(object):
         Returns:
             value -- value for the given option in the given section 
         """
-        option, section=self.getKeys(option, section)
+        option, section=self.getKey(option, section)
         return self.options[section][option]
 
     def set(self, value, option=None, section=None):
@@ -77,7 +89,7 @@ class Input(object):
             option {str} -- Option to be set. (default: {None})
             section {str} -- Section where the option is located. (default: {None})
         """
-        option, section=self.getKeys(option, section)
+        option, section=self.getKey(option, section)
         self.options[section][option]=value
 
     def convert_type(self, dtype, option=None, section=None):
@@ -90,8 +102,8 @@ class Input(object):
             option {string} -- The option to be converted. (default: {None})
             section {string} -- The section where the option is located (default: {None})
         """
-        option, section=self.getKeys(option, section)
-        myDict={int: self.config.getint, float: self.config.getfloat, bool: self.config.getboolean}
+        option, section=self.getKey(option, section)
+        myDict={int: lambda sec, opt: int(self.get(opt, sec)), float: lambda sec, opt: float(self.get(opt, sec)), bool: lambda sec, opt: self.get(opt, sec).lower() in ("true", "yes", "1", "t")}
         self.set(myDict.get(dtype)(section, option),option=option, section=section)
 
     def convert_array(self, dtype, option=None, section=None, sep=",", removeSpaces=False):
@@ -106,14 +118,45 @@ class Input(object):
             sep {string} -- The separator between the array values (default: {","})
             removeSpaces {bool} -- Remove spaces in the elements when converting to string array. (default: {False})
         """
-        option, section=self.getKeys(option, section)
+        option, section=self.getKey(option, section)
         if dtype==str:
-            array=self.config[section][option].split(sep)
+            array=self.options[section][option].split(sep)
             if removeSpaces:
                 array=[x.strip() for x in array]
         else:
-            array=np.fromstring(self.config[section][option], sep=sep, dtype=dtype)
+            array=np.fromstring(self.options[section][option], sep=sep, dtype=dtype)
         self.set(array, option, section)
+    
+    def add_outfile(self, output_files):
+        """Add the name of the outputfiles of your program. They will be listed in the logfile, together with their hash value.
+        
+        Arguments:
+            output_files {string or list of strings} -- The paths of the outputfiles. Relative paths will be interpreted relative to the currend working directory.
+        """
+        output_files=np.atleast_1d(output_files)
+        for path in output_files:
+            abspath=os.path.abspath(path)
+            if not os.path.isfile(abspath):
+                printf("WARNING: at the moment, there is no such file: "+abspath)
+            self.outfilename.append(abspath)
+
+    def hash_file(self, file):
+        """Calculate the hash of a file.
+        
+        Arguments:
+            file {str} -- The path of the file
+        
+        Returns:
+            str -- The hexadecimal sha256 hash of the file.
+        """
+        BLOCK_SIZE = 65536 # The size of each read from the file
+        file_hash = hashlib.sha256() # Create the hash object, can use something other than `.sha256()` if you wish
+        with open(file, 'rb') as f: # Open the file to read it's bytes
+            fb = f.read(BLOCK_SIZE) # Read from the file. Take in the amount declared above
+            while len(fb) > 0: # While there is still data being read from the file
+                file_hash.update(fb) # Update the hash
+                fb = f.read(BLOCK_SIZE) # Read the next block from the file
+        return file_hash.hexdigest() # Get the hexadecimal digest of the hash
 
     def create_log(self):
         """Create a log of the Input object.
@@ -143,6 +186,12 @@ class Input(object):
             log.append("#---"+str(sec)+"---")
             for opt in self.options[sec].keys():
                 log.append("#"+str(opt)+": " + str(self.get(opt,sec)))
+        if len(self.outfilename)>0:
+            log.append("#**************************")
+            log.append("#Output files created:")
+            for path in self.outfilename:
+                log.append("#%PATH% "+path)
+                log.append("#%HASH% "+self.hash_file(path))
         log=[l+"\n" for l in log]
         return log
 
