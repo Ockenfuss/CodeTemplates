@@ -45,6 +45,17 @@ int read3d_float_fromfile(const char *filename, arr3d_f* array, const int skip_h
   return 0;
 }
 //=======================Get and set values==================================================================================================================
+//2D
+//Integer
+int get2d_i(const arr2d_i* arr, const size_t x, const size_t y)
+{
+    return arr->data[arr->stridex*x+arr->stridey*y];
+}
+int set2d_i(arr2d_i* arr, const size_t x, const size_t y,const int val)
+{
+    arr->data[arr->stridex*x+arr->stridey*y]=val;
+    return 0;
+}
 //3D
 //Float
 float get3d_f(const arr3d_f* arr, const size_t x, const size_t y, const size_t z)
@@ -219,6 +230,29 @@ int array3d_int_tostream1(FILE* stream, arr3d_i* array)
 }
 
 //=======================Memory managment==================================================================================================================
+//2D
+//Integer
+arr2d_i* calloc2d_int(const size_t nx, const size_t ny)
+{
+    arr2d_i* arr;
+    arr=malloc(sizeof(arr2d_i));
+    arr->nx=nx;
+    arr->ny=ny;
+    arr->data=(int*)calloc(nx*ny, sizeof(int));
+    arr->stridey=1;
+    arr->stridex=arr->stridey*ny;
+    return arr;
+}
+
+int free2d_int(arr2d_i* arr)
+{
+    free(arr->data);
+    free(arr);
+    return 0;
+}
+
+
+
 //3D
 //Float
 arr3d_f* calloc3d_float(const size_t nx, const size_t ny, const size_t nz)
