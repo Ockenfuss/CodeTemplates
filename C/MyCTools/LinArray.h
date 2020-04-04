@@ -7,6 +7,16 @@
 #ifndef LINARRAY_H
 #define LINARRAY_H
 //=======================Type definitions==================================================================================================================
+//2D
+//Integer
+typedef struct arr2d_i{
+    int* data;
+    size_t nx;
+    size_t ny;
+    size_t stridex;
+    size_t stridey;
+}arr2d_i;
+
 //3D
 //Float
 typedef struct arr3d_f{
@@ -43,6 +53,10 @@ typedef struct arr4d_f{
 }arr4d_f;
 
 //=======================Get and set values==================================================================================================================
+//2D
+//Integer
+int get2d_i(const arr2d_i* arr, const size_t x, const size_t y);
+int set2d_i(arr2d_i* arr, const size_t x, const size_t y,const int val);
 //3D
 //Float
 float get3d_f(const arr3d_f* arr, const size_t x, const size_t y, const size_t z);
@@ -72,6 +86,10 @@ int array3d_int_tostream(FILE* stream, arr3d_i* array);
 int array3d_int_to_file1(char *filename, arr3d_i* array);
 int array3d_int_tostream1(FILE* stream, arr3d_i* array);
 //=======================Memory managment==================================================================================================================
+//2D
+//Integer
+arr2d_i* calloc2d_int(const size_t nx, const size_t ny);
+int free2d_int(arr2d_i* arr);
 //3D
 //Float
 arr3d_f* calloc3d_float(const size_t nx, const size_t ny, const size_t nz);
