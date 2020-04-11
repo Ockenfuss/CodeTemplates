@@ -133,6 +133,7 @@ class Input(object):
             array=self.options[section][option].split(sep)
             if removeSpaces:
                 array=[x.strip() for x in array]
+            array=[a for a in array if a]
         else:
             array=np.fromstring(self.options[section][option], sep=sep, dtype=dtype)
         self.set(array, option, section)

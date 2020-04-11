@@ -20,6 +20,7 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
     fig_dim: tuple
             Dimensions of figure in inches
     """
+    #Determine this value with \showthe\textwidth in latex!
     if width == 'thesis':
         width_pt = 469.47049
     elif width == 'beamer':
@@ -46,12 +47,26 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
 
     return fig_dim
 
-def label_panels(ax):
+def label_panels(ax, position="upper right"):
+    if position=="upper right":
+        coords=(0.9,0.9)
+    elif position=="upper left":
+        coords=(0.1,0.9)
+    elif position=="upper middle":
+        coords=(0.5,0.9)
+    elif position=="lower right":
+        coords=(0.9,0.1)
+    elif position=="lower left":
+        coords=(0.1,0.1)
+    elif position=="lower middle":
+        coords=(0.5,0.1)
+    else:
+        coords=position
     axf=ax.flatten()
     annotations=[]
     for i,a in enumerate(axf):
         letter=chr(97+i)
-        annotations.append(a.annotate(letter+")",xy=(0.9, 0.9), xycoords='axes fraction'))
+        annotations.append(a.annotate(letter+")",xy=coords, xycoords='axes fraction'))
     return annotations
 
 
@@ -67,4 +82,7 @@ nice_fonts = {
         "xtick.labelsize": 8,
         "ytick.labelsize": 8,
         "figure.autolayout": True,
+        "pgf.preamble": [
+        r"\usepackage{siunitx}"
+        ],                                   # or call plt.rcParams["text.latex.preamble"]=[r"\usepackage{siunitx}"] in your script
 }
