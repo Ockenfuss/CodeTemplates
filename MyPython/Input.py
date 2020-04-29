@@ -48,6 +48,8 @@ class Input(object):
                 # self.options[sec][key]=def_opts[sec][key]
                 self.config.set(sec, key, def_opts[sec][key])
         if infilename is not None:
+            with open(infilename) as f:#Check for existence
+                pass
             self.config.read(infilename)
         for sec in self.config:
             if not (sec in self.options):
