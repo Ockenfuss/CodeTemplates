@@ -60,6 +60,12 @@ def label_panels(ax, position="upper right"):
         coords=(0.1,0.1)
     elif position=="lower middle":
         coords=(0.5,0.1)
+    elif position=="middle left":
+        coords=(0.1,0.5)
+    elif position=="middle right":
+        coords=(0.9,0.5)
+    elif position=="center" or position=="middle middle" or position=="middle":
+        coords=(0.5,0.5)
     else:
         coords=position
     axf=ax.flatten()
