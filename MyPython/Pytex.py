@@ -1,6 +1,6 @@
 """Various functions useful when combining python and latex, e.g. when making plots
 """
-
+import numpy as np
 
 def set_size(width='thesis', sitewidth=1, siteheight="golden"):
     #Source: https://jwalton.info/Embed-Publication-Matplotlib-Latex/
@@ -47,7 +47,7 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
 
     return fig_dim
 
-def label_panels(ax, position="upper right"):
+def label_panels(ax, position="upper right", color='black'):
     if position=="upper right":
         coords=(0.9,0.9)
     elif position=="upper left":
@@ -70,9 +70,11 @@ def label_panels(ax, position="upper right"):
         coords=position
     axf=ax.flatten()
     annotations=[]
+    color=np.atleast_1d(color)
+    ncolors=len(color)
     for i,a in enumerate(axf):
         letter=chr(97+i)
-        annotations.append(a.annotate(letter+")",xy=coords, xycoords='axes fraction'))
+        annotations.append(a.annotate(letter+")",xy=coords, xycoords='axes fraction', color=color[i%ncolors]))
     return annotations
 
 
