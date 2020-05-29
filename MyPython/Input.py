@@ -243,13 +243,13 @@ class Input(object):
         for old in old_logs:
             oldfile=open(old)
             old_lines.extend(oldfile.readlines())
-            old_lines.append("\n##############################################################")
             oldfile.close()
-        old_lines.append("\n##############################################################\n")
         # old_lines=[l for l in old_lines]
         for new in new_logs:
             newfile=open(new, "w")
             newfile.writelines(old_lines)
+            newfile.write("#####################################################################################\n")
+            newfile.write(f"#####{os.path.basename(new)} in {os.path.dirname(new)}######\n")
             newfile.writelines(log)
             newfile.close()
 
