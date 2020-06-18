@@ -49,28 +49,29 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
 
 def label_panels(ax, position="upper right", color='black'):
     def _parse_position(position):
-        if position=="upper right":
-            coords=(0.9,0.9)
-        elif position=="upper left":
-            coords=(0.1,0.9)
-        elif position=="upper middle":
-            coords=(0.5,0.9)
-        elif position=="lower right":
-            coords=(0.9,0.1)
-        elif position=="lower left":
-            coords=(0.1,0.1)
-        elif position=="lower middle":
-            coords=(0.5,0.1)
-        elif position=="middle left":
-            coords=(0.1,0.5)
-        elif position=="middle right":
-            coords=(0.9,0.5)
-        elif position=="center" or position=="middle middle" or position=="middle":
-            coords=(0.5,0.5)
+        if position is str:
+            if position=="upper right":
+                coords=(0.9,0.9)
+            elif position=="upper left":
+                coords=(0.1,0.9)
+            elif position=="upper middle":
+                coords=(0.5,0.9)
+            elif position=="lower right":
+                coords=(0.9,0.1)
+            elif position=="lower left":
+                coords=(0.1,0.1)
+            elif position=="lower middle":
+                coords=(0.5,0.1)
+            elif position=="middle left":
+                coords=(0.1,0.5)
+            elif position=="middle right":
+                coords=(0.9,0.5)
+            elif position=="center" or position=="middle middle" or position=="middle":
+                coords=(0.5,0.5)
         else:
             coords=position
         return coords
-    axf=ax.flatten()
+    axf=np.array(ax).flatten()
     annotations=[]
     color=np.atleast_1d(color)
     ncolors=len(color)
