@@ -49,7 +49,7 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
 
 def label_panels(ax, position="upper right", color='black'):
     def _parse_position(position):
-        if position is str:
+        if position is str or isinstance(position, np.str_):
             if position=="upper right":
                 coords=(0.9,0.9)
             elif position=="upper left":
