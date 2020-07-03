@@ -1,6 +1,7 @@
 """Various functions useful when combining python and latex, e.g. when making plots
 """
 import numpy as np
+import subprocess as sp
 
 def set_size(width='thesis', sitewidth=1, siteheight="golden"):
     #Source: https://jwalton.info/Embed-Publication-Matplotlib-Latex/
@@ -81,6 +82,9 @@ def label_panels(ax, position="upper right", color='black'):
         letter=chr(97+i)
         annotations.append(a.annotate(letter+")",xy=_parse_position(position[i%nposition]), xycoords='axes fraction', color=color[i%ncolors]))
     return annotations
+
+def pdfcrop(pdffile):
+    sp.call(f"pdfcrop {pdffile} {pdffile}", shell=True)#Simple execution of string
 
 
 nice_fonts = {
