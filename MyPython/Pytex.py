@@ -26,6 +26,8 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
         width_pt = 469.47049
     elif width == 'beamer':
         width_pt = 307.28987
+    elif width == 'jgr':
+        width_pt = 540.6024
     else:
         width_pt = width
     # Width of figure
@@ -48,20 +50,33 @@ def set_size(width='thesis', sitewidth=1, siteheight="golden"):
 
     return fig_dim
 
-def label_panels(ax, position="upper right", color='black'):
+def label_panels(ax, position="upper right", color='black', font_weight='normal', startchar='a'):
+    """Label panels in a figure with letters
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes or list of matplotlib.axes.Axes
+        Axes to label
+    position : str or list of str or list of tuples of float, optional
+        Position of the label, either as string or as a list of positions for each panel. In the latter case, positions can be strings or tuples of coordinates. by default "upper right"
+    color : str, optional
+        The color of the labels, by default 'black'
+    font_weight : str, optional
+        the font weight of the labels, by default 'normal'
+    """
     def _parse_position(position):
-        if position is str or isinstance(position, np.str_):
-            if position=="upper right":
+        if isinstance(position, str) or isinstance(position, np.str_):
+            if position=="upper right" or position=="top right":
                 coords=(0.9,0.9)
-            elif position=="upper left":
+            elif position=="upper left" or position=="top left":
                 coords=(0.1,0.9)
-            elif position=="upper middle":
+            elif position=="upper middle" or position=="top middle":
                 coords=(0.5,0.9)
-            elif position=="lower right":
+            elif position=="lower right" or position=="bottom right":
                 coords=(0.9,0.1)
-            elif position=="lower left":
+            elif position=="lower left" or position=="bottom left":
                 coords=(0.1,0.1)
-            elif position=="lower middle":
+            elif position=="lower middle" or position=="bottom middle":
                 coords=(0.5,0.1)
             elif position=="middle left":
                 coords=(0.1,0.5)
@@ -76,11 +91,13 @@ def label_panels(ax, position="upper right", color='black'):
     annotations=[]
     color=np.atleast_1d(color)
     ncolors=len(color)
-    position=np.atleast_1d(position)
+    if isinstance(position, str):
+        position=[position]
+    position=[_parse_position(p) for p in position]
     nposition=len(position)
     for i,a in enumerate(axf):
-        letter=chr(97+i)
-        annotations.append(a.annotate(letter+")",xy=_parse_position(position[i%nposition]), xycoords='axes fraction', color=color[i%ncolors]))
+        letter=chr(ord(startchar)+i)
+        annotations.append(a.annotate(letter+")",xy=position[i%nposition], xycoords='axes fraction', color=color[i%ncolors], weight=font_weight))
     return annotations
 
 def pdfcrop(pdffile):
@@ -102,4 +119,18 @@ nice_fonts = {
         "pgf.preamble": [
         r"\usepackage{siunitx}"
         ],                                   # or call plt.rcParams["text.latex.preamble"]=[r"\usepackage{siunitx}"] in your script
+}
+
+jgr_fonts = {
+        # Use LaTeX to write all text
+        "text.usetex": True,
+        "font.family": "serif",
+        "axes.labelsize": 8,
+        "font.size": 8,
+
+        "legend.fontsize": 8,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "figure.autolayout": True,
+        # "pgf.preamble": [r"\usepackage{siunitx}"],                                   # or call plt.rcParams["text.latex.preamble"]=[r"\usepackage{siunitx}"] in your script
 }
